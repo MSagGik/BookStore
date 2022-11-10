@@ -1,6 +1,6 @@
 package sortmap;
 
-import sortmap.entity.Book;
+import sortmap.entity.BookSortTreeMap;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -11,33 +11,33 @@ import java.util.*;
 public class BookStoreSortTreeMap {
     public static void main(String[] args) {
         System.out.println("Добро пожаловать!\nВ книжнем магазине имеются следующие книги:");
-        List<Map<String, Book>> listBook = readData("src/resources/book_db.txt");
+        List<Map<String, BookSortTreeMap>> listBook = readData("src/resources/book_db.txt");
         viewBook(listBook.get(0), listBook.get(1));
         saveBook(listBook.get(0), listBook.get(1),"src/sortmap/output/book_sort.txt");
     }
     // считывание файла книг
-    public static List<Map<String, Book>> readData(String fileName) {
+    public static List<Map<String, BookSortTreeMap>> readData(String fileName) {
         try {
             // считывание файла
             Scanner scanner = new Scanner(new File(fileName));
-            Map<String, Book> bookMapAuthor = new TreeMap<>();
-            Map<String, Book> bookMapNameBook = new TreeMap<>();
+            Map<String, BookSortTreeMap> bookMapAuthor = new TreeMap<>();
+            Map<String, BookSortTreeMap> bookMapNameBook = new TreeMap<>();
             while (scanner.hasNext()) {
-                Book book = new Book();
+                BookSortTreeMap bookSortTreeMap = new BookSortTreeMap();
                 // считывание строки файла
                 String[] bookAll = scanner.nextLine().split("   ");
                 // инициализация полей книги
-                book.setAuthor(bookAll[0]);
-                book.setBookName(bookAll[1]);
-                book.setGenre(bookAll[2]);
-                book.setPrice(Double.parseDouble(bookAll[3]));
+                bookSortTreeMap.setAuthor(bookAll[0]);
+                bookSortTreeMap.setBookName(bookAll[1]);
+                bookSortTreeMap.setGenre(bookAll[2]);
+                bookSortTreeMap.setPrice(Double.parseDouble(bookAll[3]));
                 // заполнение map
-                bookMapAuthor.put(book.getAuthor(), book);
-                bookMapNameBook.put(book.getBookName(), book);
+                bookMapAuthor.put(bookSortTreeMap.getAuthor(), bookSortTreeMap);
+                bookMapNameBook.put(bookSortTreeMap.getBookName(), bookSortTreeMap);
             }
             scanner.close();
             // создание коллекции коллекций
-            List<Map<String, Book>> listAll = new ArrayList<>();
+            List<Map<String, BookSortTreeMap>> listAll = new ArrayList<>();
             listAll.add(0, bookMapAuthor);
             listAll.add(1, bookMapNameBook);
             return listAll;
@@ -47,7 +47,7 @@ public class BookStoreSortTreeMap {
         }
     }
     // вывод в консоль данных с двумя видами сортировки
-    public static void viewBook(Map<String, Book> viewBookMapAuthor, Map<String, Book> viewBookMapName){
+    public static void viewBook(Map<String, BookSortTreeMap> viewBookMapAuthor, Map<String, BookSortTreeMap> viewBookMapName){
         int countAuthor = 1, countName = 1;
         // вывод в консоль данных отсортированных по автору книг
         System.out.println("Сортировка по авторам:");
@@ -63,7 +63,7 @@ public class BookStoreSortTreeMap {
         }
     }
     // запись в файл данных с двумя видами сортировки
-    public static void saveBook(Map<String, Book> viewBookMapAuthor, Map<String, Book> viewBookMapName, String fileName){
+    public static void saveBook(Map<String, BookSortTreeMap> viewBookMapAuthor, Map<String, BookSortTreeMap> viewBookMapName, String fileName){
         try {
             FileWriter fileWriter = new FileWriter(new File(fileName), false);
             int countAuthor = 1, countName = 1;

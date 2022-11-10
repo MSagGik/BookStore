@@ -1,12 +1,12 @@
 package sortmap.entity;
 
-public class Book {
+public class BookSortTreeMap {
     private String author;
     private String bookName;
     private String genre;
     private double price;
 
-    public Book() {
+    public BookSortTreeMap() {
     }
 
     public String getAuthor() {
